@@ -8,6 +8,9 @@ function sue(str, obj, def) {
      *
      */
     var props = str.split('.');
+    if (obj == null || typeof obj == 'undefined') {
+        obj = window[props[0]];
+    }
     for (i in props) {
         if (typeof obj[props[i]] != 'undefined' && obj[props[i]] != null && obj[props[i]] != 'null') {
             obj = obj[props[i]];
