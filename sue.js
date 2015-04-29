@@ -1,23 +1,30 @@
-function sue(str, obj, def) {
+function sue(str, options) {
     /*
      * a function named sue. This is an improved elvis operator, named after the inimitable Johnny Cash.
      *
      * 1st parameter is the string representation of the dotted-name variable in question
-     * 2nd parameter is the object to be inspected
-     * 3rd parameter is the default value. this is optional and will default to an empty string
+     * 2nd parameter is an object with optional parameters:
+     *          def : - the default value to return
+     *          data: - the variable to inspect
      *
      */
+    var data;
+    var def;
     var props = str.split('.');
-    if (obj == null || typeof obj == 'undefined') {
-        obj = window[props[0]];
+    var i = 0;
+    if (options == null || options.data == null) {
+        data = window[props[0]];
+    } else {
+        data = options.data;
     }
+
     for (i in props) {
-        if (typeof obj[props[i]] != 'undefined' && obj[props[i]] != null && obj[props[i]] != 'null') {
-            obj = obj[props[i]];
+        if (typeof data[props[i]] != 'undefined' && data[props[i]] != null && data[props[i]] != 'null') {
+            data = data[props[i]];
         } else {
             // couldn't reference the child, so we'll return the default value
-            return def || '';
+            return options.def || '';
         }
     }
-    return obj;
+    return data;
 }
